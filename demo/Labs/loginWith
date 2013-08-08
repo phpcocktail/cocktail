@@ -1,0 +1,115 @@
+#example output of the script run, with setting login field
+
+string(35) php ModelTest1Run.php ModelMinorA 1
+string(35) php ModelTest1Run.php ModelMinorB 1
+string(29) php ModelTest1Run.php Minor 1
+string(35) php ModelTest1Run.php ModelMajorA 1
+string(35) php ModelTest1Run.php ModelMajorB 1
+string(29) php ModelTest1Run.php Major 1
+string(38) php ModelTest1Run.php ModelMinorA 1000
+string(38) php ModelTest1Run.php ModelMinorB 1000
+string(32) php ModelTest1Run.php Minor 1000
+string(38) php ModelTest1Run.php ModelMajorA 1000
+string(38) php ModelTest1Run.php ModelMajorB 1000
+string(32) php ModelTest1Run.php Major 1000
+string(39) php ModelTest1Run.php ModelMinorA 10000
+string(39) php ModelTest1Run.php ModelMinorB 10000
+string(33) php ModelTest1Run.php Minor 10000
+string(39) php ModelTest1Run.php ModelMajorA 10000
+string(39) php ModelTest1Run.php ModelMajorB 10000
+string(33) php ModelTest1Run.php Major 10000
+Array(18) (
+	[0] => Array(3) (
+		[0] => string(35) php ModelTest1Run.php ModelMinorA 1
+		[usage] => string(5) 53832
+		[peak] => string(5) 24416
+	)
+	[1] => Array(3) (
+		[0] => string(35) php ModelTest1Run.php ModelMinorB 1
+		[usage] => string(5) 53760
+		[peak] => string(5) 24344
+	)
+	[2] => Array(3) (
+		[0] => string(29) php ModelTest1Run.php Minor 1
+		[usage] => string(3) 896
+		[peak] => string(1) 0
+	)
+	[3] => Array(3) (
+		[0] => string(35) php ModelTest1Run.php ModelMajorA 1
+		[usage] => string(5) 86952
+		[peak] => string(5) 59856
+	)
+	[4] => Array(3) (
+		[0] => string(35) php ModelTest1Run.php ModelMajorB 1
+		[usage] => string(5) 86872
+		[peak] => string(5) 59768
+	)
+	[5] => Array(3) (
+		[0] => string(29) php ModelTest1Run.php Major 1
+		[usage] => string(3) 896
+		[peak] => string(1) 0
+	)
+	[6] => Array(3) (
+		[0] => string(38) php ModelTest1Run.php ModelMinorA 1000
+		[usage] => string(7) 1337432
+		[peak] => string(7) 1299512
+	)
+	[7] => Array(3) (
+		[0] => string(38) php ModelTest1Run.php ModelMinorB 1000
+		[usage] => string(7) 1273408
+		[peak] => string(7) 1235488
+	)
+	[8] => Array(3) (
+		[0] => string(32) php ModelTest1Run.php Minor 1000
+		[usage] => string(6) 300664
+		[peak] => string(6) 262048
+	)
+	[9] => Array(3) (
+		[0] => string(38) php ModelTest1Run.php ModelMajorA 1000
+		[usage] => string(7) 1370552
+		[peak] => string(7) 1332656
+	)
+	[10] => Array(3) (
+		[0] => string(38) php ModelTest1Run.php ModelMajorB 1000
+		[usage] => string(7) 1306536
+		[peak] => string(7) 1268640
+	)
+	[11] => Array(3) (
+		[0] => string(32) php ModelTest1Run.php Major 1000
+		[usage] => string(6) 300664
+		[peak] => string(6) 262048
+	)
+	[12] => Array(3) (
+		[0] => string(39) php ModelTest1Run.php ModelMinorA 10000
+		[usage] => string(8) 13613984
+		[peak] => string(8) 13576064
+	)
+	[13] => Array(3) (
+		[0] => string(39) php ModelTest1Run.php ModelMinorB 10000
+		[usage] => string(8) 12973912
+		[peak] => string(8) 12935992
+	)
+	[14] => Array(3) (
+		[0] => string(33) php ModelTest1Run.php Minor 10000
+		[usage] => string(7) 3517680
+		[peak] => string(7) 3479064
+	)
+	[15] => Array(3) (
+		[0] => string(39) php ModelTest1Run.php ModelMajorA 10000
+		[usage] => string(8) 13647136
+		[peak] => string(8) 13609240
+	)
+	[16] => Array(3) (
+		[0] => string(39) php ModelTest1Run.php ModelMajorB 10000
+		[usage] => string(8) 13007040
+		[peak] => string(8) 12969144
+	)
+	[17] => Array(3) (
+		[0] => string(33) php ModelTest1Run.php Major 10000
+		[usage] => string(7) 3517680
+		[peak] => string(7) 3479064
+	)
+)
+
+FU
+

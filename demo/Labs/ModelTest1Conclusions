@@ -1,0 +1,42 @@
+The tests instanciate a number of classes and measure memory increase.
+
+The classes are named like:
+	*Minor* - containins 1 field
+	*Major* - containins 21 fields
+	Model*A - contains all current functionality of Camarera\Model
+	Model*B - functionality not directly needed for the test removed from Camarera\Model
+	Model*C - inflate functionality abstracted to helper class
+
+Diffs in numbers, based on instanciating 10000 models:
+diff ModelMinorA - ModelMinorB with a field = 4.6%%     (13613984−12973912)/13613984
+diff ModelMinorA - ModelMinorB without setting = 6.55%  (9773976−9133960)/9773976
+diff ModelMinorB - Minor with a field = 72.89%          (12973912−3517680)/12973912
+diff ModelMinorB - Minor without setting = 72.87%       (9133960−2477656)/
+
+diff ModelMajorA - ModelMajorB with a field = 4.69%%    (13647136−13007040)/13647136
+diff ModelMajorA - ModelMajorB without setting = 6.53%  (9807048−9167040)/9807048
+diff ModelMajorB - Major with a field = 72.96%          (13007040−3517680)/13007040
+diff ModelMajorB - Major without setting = 72.97%       (9167040−2477656)/9167040
+
+diff ModelMajorA - ModelMinorA with a field = 0.24%     (13647136-13613984)/13647136
+diff ModelMajorA - ModelMinorA without setting = 0.34%  (9807048-9773976)/9807048
+...
+
+Diff in words:
+It doesn't matter how many fields the model contains. Assigning values does
+	matter. Obviously, a fully assigned model with many fields will take more memory
+	than another having just a few fields.
+Setting a field's value raises memory usage by ~2% (setting more than one field was
+	not tested).
+Removing all Camarera\Model functionality would decrease memory usage by 70%
+The concept of ModelC was to move some code to a helper class and see if memory
+	usage drops. It actually went up by few bytes...
+
+Conclusion:
+There would not be much use abstracting code to another class (~5-6%). Actually
+	instanciating tons of full blown Model objects uses almost the same memory as
+	instanciating ones with only essential functionality.
+However, the abstract field definition concept works fine, models with many fields
+	consume about the same memory as those with just one (<1%). I haven't measured
+	instanciating models with their own protected $_field array but it would obviously
+	consume lot of memory...

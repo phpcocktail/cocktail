@@ -1,0 +1,38 @@
+{
+	"name": "phpcocktail/cocktail",
+	"version": "1.01",
+	"dist": {
+		"url": "/mnt/mini/playa/vendor/phpcocktail/cocktail",
+		"type": "vcs"
+	},
+	"repositories": [
+		{
+			"type": "package",
+			"package": {
+				"name": "phpcocktail/block",
+				"version": "1.01",
+				"source": {
+					"url": "https://github.com/phpcocktail/block.git",
+					"type": "git",
+					"reference": "master"
+				},
+				"autoload": {
+					"classmap": ["src/"],
+					"files": ["bootstrap.php"]
+				}
+			}
+		}
+	],
+	"require": {
+		"electrolinux/phpquery": "dev-master",
+		"phpcocktail/block": "*"
+	},
+	"autoload": {
+		"classmap": [
+			"src/"
+		],
+		"files": [
+			"bootstrap.php"
+		]
+	}
+}
