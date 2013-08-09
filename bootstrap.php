@@ -22,5 +22,3 @@ if (!defined('CL_ROOT')) {
 // I alias this class as \b for easy usage in templates. I know it is nasty...
 class_alias('Cocktail\Beautify', 'b');
 
-// @todo remove composer hack after composer libs cleared
-require('vendor/phpcocktail/block/bootstrap.php');

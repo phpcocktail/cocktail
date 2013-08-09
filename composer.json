@@ -1,8 +1,8 @@
 {
 	"name": "phpcocktail/cocktail",
-	"version": "1.01",
+	"version": "1.1",
 	"dist": {
-		"url": "/mnt/mini/playa/vendor/phpcocktail/cocktail",
+		"url": "https://github.com/phpcocktail/cocktail.git",
 		"type": "vcs"
 	},
 	"repositories": [
@@ -10,7 +10,7 @@
 			"type": "package",
 			"package": {
 				"name": "phpcocktail/block",
-				"version": "1.01",
+				"version": "1.1",
 				"source": {
 					"url": "https://github.com/phpcocktail/block.git",
 					"type": "git",
