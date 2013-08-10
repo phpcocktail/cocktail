@@ -13,7 +13,18 @@
  * @version 1.1
  */
 
-require(realpath(dirname(__FILE__) . '/../..') . '/autoload.php');
+$autoloadFname = realpath(dirname(__FILE__) . '/../..') . '/autoload.php';
+$autoloadFname2 = 'vendor/autoload.php';
+if (@include($autoloadFname));
+elseif (@include($autoloadFname2));
+else {
+	die ("\n" .
+		"Cannot find autoload file, looked in:\n" .
+		$autoloadFname . "\n" .
+		$autoloadFname2 . "\n" .
+		"\n"
+	);
+};
 
 \Beautify::setMode(\Beautify::MODE_BEAUTIFUL_NEWLINES);
 
