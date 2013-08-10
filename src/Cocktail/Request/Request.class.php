@@ -44,23 +44,37 @@ abstract class Request {
 	 */
 	public static function instance() {
 		if (is_null(static::$_Instance)) {
-			static::$_Instance = static::getFromCurrentRequest();
+			static::$_Instance = static::_instance();
 		}
 		return static::$_Instance;
 	}
 
-    /**
+	/**
+	 * I set params based on current env request
+	 * @return static
+	 */
+	protected static function _instance() {
+		$Request = new static();
+		$Request->_SERVER = $_SERVER;
+		return $Request;
+	}
+
+	/**
      * I create and return an instance
      * @param true|???
-     * @return Cocktail\Request
+     * @return \Cocktail\Request
      */
-    public static function get($data) {
-        if ($data === true) {
-			debug_print_backtrace(); die('FUCK');
-            return static::instance();
-        }
-        // @todo handle if data is sent
-        else die('@TODO');
+    public static function serve($data=null) {
+		if (is_null($data)) {
+			$ret = new static;
+		}
+		elseif ($data === true) {
+			$ret = static::instance();
+		}
+		else{
+			throw new \HttpInvalidParamException();
+		}
+		return $ret;
     }
 
     /**
@@ -103,16 +117,6 @@ abstract class Request {
 		else {
 			return isset($this->{$origin}[$paramName]) ? $this->{$origin}[$paramName] : null;
 		}
-	}
-
-	/**
-	 * I set basic things in Request, currently just $_SERVER
-	 * @return static
-	 */
-	public static function getFromCurrentRequest() {
-		$Request = new static;
-		$Request->_SERVER = $_SERVER;
-		return $Request;
 	}
 
 }

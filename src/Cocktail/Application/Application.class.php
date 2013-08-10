@@ -163,6 +163,16 @@ abstract class Application {
 	 */
 	abstract protected function _getResponse();
 
+	public function setRequest(\Request $Request) {
+		$this->_Request = $Request;
+		return $this;
+	}
+
+	public function setResponse(\Response $Response) {
+		$this->_Response = $Response;
+		return $this;
+	}
+
 	/**
 	 * I do, in order:
 	 *		get a Request object
@@ -175,12 +185,15 @@ abstract class Application {
 	 */
 	public function run() {
 
-		$requestClassname = $this->_Config->requestClassname;
-		// @todomake this a ::get() also. there might be multiple applications, though not chancy
-		$this->_Request = $requestClassname::instance();
+		if (empty($this->_Request)) {
+			$requestClassname = $this->_Config->requestClassname;
+			$this->_Request = $requestClassname::instance();
+		}
 
-		$responseClassname = $this->_Config->responseClassname;
-		$this->_Response = $responseClassname::get();
+		if (empty($this->_Response)) {
+			$responseClassname = $this->_Config->responseClassname;
+			$this->_Response = $responseClassname::get();
+		}
 
 		$routerClassname = $this->_Config->routerClassname;
 

@@ -33,9 +33,9 @@ class RequestConsole extends \Request {
 	 * I create an instance of me and fill with command line params
 	 * @return \static
 	 */
-	public static function getFromCurrentRequest() {
+	protected static function _instance() {
 
-		$Request = parent::getFromCurrentRequest();
+		$Request = parent::_instance();
 
 		$routeParts = $_SERVER['argv'];
 

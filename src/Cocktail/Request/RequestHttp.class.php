@@ -85,9 +85,9 @@ class RequestHttp extends \Request {
 	 * I return the object for the current HTTP request.
 	 * @return \RequestHttp
 	 */
-	public static function getFromCurrentRequest() {
+	protected static function _instance() {
 
-		$Request = parent::getFromCurrentRequest();
+		$Request = parent::_instance();
 		$Request->_REQUEST = $_REQUEST;
 		$Request->_GET = $_GET;
 		$Request->_POST = $_POST;
