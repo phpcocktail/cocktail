@@ -31,7 +31,7 @@ namespace Cocktail;
  * @author t
  * @version 1.01
  */
-class Shake extends \Controller {
+class Shake extends \Cocktail\Controller {
 
 	/**
 	 * path to start at

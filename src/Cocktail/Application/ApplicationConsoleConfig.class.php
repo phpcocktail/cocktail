@@ -20,7 +20,7 @@ class ApplicationConsoleConfig extends \ApplicationConfig {
 
 	public $theme = 'console';
 
-	public $applicationClassname = '\ApplicationHttp';
+	public $applicationClassname = '\ApplicationConsole';
 
 	public $requestClassname = '\RequestConsole';
 

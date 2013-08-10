@@ -93,9 +93,10 @@ abstract class Application {
 		}
 
 		// I use the namespaceless classname for proper class shifting
-		$applicationClassname = $applicationClassname2;
-		$configClassname = $applicationClassname . 'Config';
-		if (class_exists($configClassname));
+		$configClassname = $applicationClassname2 . 'Config';
+		if (class_exists($configClassname)) {
+			\Camarera::log(\Camarera::LOG_NOTICE, 'Config class FOUND: ' . $configClassname);
+		}
 		else {
 			\Camarera::log(\Camarera::LOG_NOTICE, 'Config class ' . $configClassname . ' not found');
 			do {

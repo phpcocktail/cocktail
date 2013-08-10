@@ -23,6 +23,7 @@
 	"require": {
 		"phpcocktail/camarera": "*"
 	},
+	"bin": ["shake.php"],
 	"autoload": {
 		"classmap": ["src/"],
 		"files": ["bootstrap.php"]
