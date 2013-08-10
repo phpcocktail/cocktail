@@ -2,10 +2,6 @@
 	"name": "phpcocktail/cocktail",
 	"description": "cocktail framework",
 	"version": "1.1",
-	"dist": {
-		"url": "https://github.com/phpcocktail/cocktail.git",
-		"type": "vcs"
-	},
 	"autoload": {
 		"classmap": ["src/"],
 		"files": ["bootstrap.php"]
