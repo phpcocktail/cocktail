@@ -13,10 +13,7 @@
  * @version 1.1
  */
 
-// @todo these shouldn't be here
-require('../camarera/vendor/autoload.php');
-require('vendor/autoload.php');
-//require('bootstrap.php');
+require(realpath(dirname(__FILE__) . '/../..') . '/autoload.php');
 
 \Beautify::setMode(\Beautify::MODE_BEAUTIFUL_NEWLINES);
 
