@@ -20,19 +20,12 @@ require(realpath(dirname(__FILE__) . '/../..') . '/autoload.php');
 try {
 	\Camarera::loadConf('Shake', Camarera::conf('Cocktail.localRoot') . '/conf/shake.php');
 
-	// @todo load application config here if applicable
-	$config = \Camarera::conf('App');
-	if (is_null($config)) {
-		$config = \Camarera::conf('Shake');
-	}
+	$Application = \ApplicationConsole::boot(\Camarera::conf('Shake'));
 
-	$ApplicationConfig = \ApplicationConsoleConfig::get($config, false);
-
-	$Application = \ApplicationConsole::get($ApplicationConfig);
 	$Application->run();
 
 }
 catch (\Exception $e) {
-	echop($e);
+	print_r($e);
 	die('UNCAUGHT EXCEPTION');
 }

@@ -56,6 +56,7 @@ class RouterFileMapper extends \Cocktail\Router {
 			$controllerClassname = $controllerNamespace . '\\' . $controllerPrefix . 'Index';
 		}
 		if (!class_exists($controllerClassname)) {
+			// @todo clean this!
 			echop('class not found: ' . $controllerClassname);
 			#echop(\Camarera::getDebug());
 			die('FU');
