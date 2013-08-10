@@ -3,7 +3,7 @@
 	"description": "cocktail framework",
 	"version": "1.1",
 	"dist": {
-		"url": "/home/t/Desktop/work/130808-gittransfer/cocktail/",
+		"url": "https://github.com/phpcocktail/cocktail.git",
 		"type": "vcs"
 	},
 	"autoload": {
