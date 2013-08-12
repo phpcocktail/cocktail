@@ -15,14 +15,9 @@ namespace Cocktail;
  * request class for console apps
  * @author t
  * @package Cocktail\Application
- * @version 1.01
+ * @version 1.1
  */
 class RequestConsole extends \Request {
-
-	/**
-	 * @var static singleton instance, get with static::instance()
-	 */
-	protected static $_Instance;
 
 	/**
 	 * @var string default request method, required for routing. In console apps, should always be 'action'

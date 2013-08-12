@@ -17,7 +17,7 @@ namespace Cocktail;
  *		or shell command
  * @author t
  * @package Cocktail\Request
- * @version 1.01
+ * @version 1.1
  * @property-read array $REQUEST
  * @property-read array $GET
  * @property-read array $POST
@@ -38,8 +38,6 @@ namespace Cocktail;
  * @property-read int $tstamp
  */
 class RequestHttp extends \Request {
-
-	protected static $_Instance;
 
 	protected $_REQUEST;
 	protected $_GET;
@@ -114,11 +112,12 @@ class RequestHttp extends \Request {
 			$Request->_requestedExtension = 'html';
 			$routeParts = substr($routeParts, 0, -5);
 		}
-		// @todo this should come from a \Camarera::conf()
-		$basePath = \Application::instance()->getConfig()->basePath;
+
+		$basePath = \Application::instance()->Config->basePath;
 		if (!empty($basePath) && (substr($routeParts, 0, strlen($basePath)) == $basePath)) {
 			$routeParts = '' . substr($routeParts, strlen($basePath));
 		}
+
 		$routeParts = trim($routeParts, '/');
 		$routeParts = strlen($routeParts) ? explode('/', $routeParts) : array();
 

@@ -15,42 +15,9 @@ namespace Cocktail;
  * simple http server application
  * @author t
  * @package Cocktail\Application
- * @version 1.01
+ * @version 1.1
  */
 class ApplicationHttp extends \Application {
-
-	/**
-	 * @var \ApplicationHttpConfig
-	 */
-	protected $_Config;
-
-	/**
-	 * @var \RequestHttp
-	 */
-	protected $_Request;
-
-	/**
-	 * @var \Controller
-	 */
-	protected $_Controller;
-
-	/**
-	 * @var \Router
-	 */
-	protected $_Router;
-
-	/**
-	 * @var \ResponseHttp
-	 */
-	protected $_Response;
-
-	/**
-	 * @param \ApplicationHttpConfig $Config
-	 * @return \ApplicationHttp
-	 */
-	public static function get(\ApplicationHttpConfig $Config) {
-		return parent::get($Config);
-	}
 
 	protected function _getRequest() {
 		return \RequestHttp::instance();

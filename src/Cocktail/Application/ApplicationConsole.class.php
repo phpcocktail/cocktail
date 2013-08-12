@@ -14,7 +14,7 @@ namespace Cocktail;
 /**
  * @author t
  * @package Cocktail\Application
- * @version 1.01
+ * @version 1.1
  */
 class ApplicationConsole extends \Application {
 

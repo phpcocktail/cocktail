@@ -14,9 +14,11 @@ namespace Cocktail;
 /**
  * @author t
  * @package Cocktail\Application
- * @version 1.01
+ * @version 1.1
  */
 abstract class Application {
+
+	use \Camarera\TraitServeWithConfig;
 
 	/**
  	 * @var \ApplicationConfig
@@ -49,102 +51,39 @@ abstract class Application {
 	protected static $_Instance;
 
 	/**
-	 * I return singleton instance
-	 * @return self
+	 * I return singleton instance. Note I use self:: so there is one Application singleton instance, not one for all subclasses
+	 * @return static
 	 */
-	public static function instance() {
-		if (empty(static::$_Instance)) {
-			static::$_Instance = static::boot();
+	public final static function instance() {
+		if (empty(self::$_Instance)) {
+			self::$_Instance = static::boot();
 		}
-		return static::$_Instance;
+		return self::$_Instance;
 	}
 
 	/**
-	 * I autoguess config class name based on ApplicationXxxYyy classname. I recursively look for ApplicationXxxYyyConfig,
-	 * 		ApplicationXxxConfig, ApplicationConfig and usefirst found class. Then just create an instance of myself and
-	 * 		return it
-	 * @param array $config if null, will fetch 'App' from Camarera config. If you send config array, make it similar.
-	 * @return \Application
+	 * I instanciate an Application instance with given array config, or by fetchin field "App" fron config. I also set
+	 *		the instance as the global singleton if it is not yet set.
+	 * @param array $config
+	 * @return static
+	 * @throws \ConfigException
 	 */
-	public static function boot($config=null) {
+	public static function boot(array $config=null) {
 
 		if (is_null($config)) {
 			$config = \Camarera::conf('App');
 		}
 		if (!is_array($config) || empty($config)) {
-			throw new \ConfigException('config key APP not found');
+			throw new \ConfigException('config key "App" not found');
 		}
 
-		// I get a full and a namespaceless aopplication classname
-		$applicationClassname = get_called_class();
-		$applicationClassname2 = '';
-		if ($pos = strrpos($applicationClassname, '\\')) {
-			$applicationClassname2 = substr($applicationClassname, $pos+1);
-		}
-		// if application classname doesn't match config value, emit a dev message
-		if (isset($config['applicationClassname']) &&
-				($config['applicationClassname'] != $applicationClassname) &&
-				($config['applicationClassname'] != $applicationClassname2)) {
-			\Camarera::log(
-				\Camarera::LOG_NOTICE,
-				'Application::boot called with wrong $config["applicationClassname"] setting, ' .
-					'called class: "' . $applicationClassname . '" $config value: "' . $config['applicationClassname'] . '"'
-			);
-		}
+		$Application = static::serve($config);
 
-		// I use the namespaceless classname for proper class shifting
-		$configClassname = $applicationClassname2 . 'Config';
-		if (class_exists($configClassname)) {
-			\Camarera::log(\Camarera::LOG_NOTICE, 'Config class FOUND: ' . $configClassname);
-		}
-		else {
-			\Camarera::log(\Camarera::LOG_NOTICE, 'Config class ' . $configClassname . ' not found');
-			do {
-				$applicationClassname2 = \Util::stripCamelPart($applicationClassname);
-				if ($applicationClassname == $applicationClassname2) {
-					$configClassname = 'ApplicationConfig';
-					break;
-				}
-				$applicationClassname = $applicationClassname2;
-				$configClassname = $applicationClassname . 'Config';
-			} while (!class_exists($configClassname));
-			\Camarera::log(\Camarera::LOG_NOTICE, 'Using config class: ' . $configClassname);
-		}
-
-		$ApplicationConfig = $configClassname::get($config);
-
-		$Application = static::get($ApplicationConfig);
-		return $Application;
-	}
-
-	/**
-	 * I get an application instance and store it in static::$_Instance if this is the first call (main app instance)
-	 * @param \ApplicationConfig $Config
-	 * @return static
-	 */
-	public static function get(\ApplicationConfig $Config=null) {
-		if (is_null($Config)) {
-			$Application = static::boot();
-		}
-		else {
-			$Application = new static($Config);
-		}
-		if (empty(self::$_Instance)) {
+		if (is_null(self::$_Instance)) {
 			self::$_Instance = $Application;
 		}
-		return $Application;
-	}
 
-	/**
-	 * I am protected, use get()
-	 * @param \ApplicationConfig $Config
-	 * @throws \InvalidArgumentException
-	 */
-	protected function __construct(\ApplicationConfig $Config) {
-		if (empty($Config->namespace)) {
-			throw new \InvalidArgumentException();
-		}
-		$this->_Config = $Config;
+		return $Application;
 	}
 
 	/**
@@ -163,11 +102,21 @@ abstract class Application {
 	 */
 	abstract protected function _getResponse();
 
+	/**
+	 * I inject request object if needed
+	 * @param \Request $Request
+	 * @return $this
+	 */
 	public function setRequest(\Request $Request) {
 		$this->_Request = $Request;
 		return $this;
 	}
 
+	/**
+	 * I inject response object if needed
+	 * @param \Response $Response
+	 * @return $this
+	 */
 	public function setResponse(\Response $Response) {
 		$this->_Response = $Response;
 		return $this;
@@ -175,8 +124,8 @@ abstract class Application {
 
 	/**
 	 * I do, in order:
-	 *		get a Request object
-	 *		get a Response object
+	 *		get a Request object (if empty)
+	 *		get a Response object (if empty)
 	 *		get a Router object
 	 *		get a Route by having the Router route the Request
 	 *		instanciate the Controller
@@ -195,27 +144,25 @@ abstract class Application {
 			$this->_Response = $responseClassname::get();
 		}
 
-		$routerClassname = $this->_Config->routerClassname;
-
-		if (substr($routerClassname, 0, 1) != '\\') {
-			$routerClassname =
-				(empty($this->_Config->namespace) ? '' : $this->_Config->namespace . '\\') .
-					$routerClassname;
+		if (empty($this->_Router)) {
+			$routerClassname = $this->_Config->routerClassname;
+			$this->_Router = $routerClassname::get();
 		}
-
-		$this->_Router = $routerClassname::get();
 
 		$Route = $this->_Router->route($this->_Request);
 
-		$controllerClassname = $Route->controllerClassname;
+		if (empty($this->_Controller)) {
+			$controllerClassname = $Route->controllerClassname;
+			$this->_Controller = $controllerClassname::get();
+		}
 
-		$this->_Controller = $controllerClassname::get();
-		$this->_Controller->setRequest($this->_Request);
-		$this->_Controller->setResponse($this->_Response);
-		$this->_Controller->invoke($Route);
+		$this->_Controller
+			->setRequest($this->_Request)
+			->setResponse($this->_Response)
+			->invoke($Route)
+		;
 
 		$this->_Response = $this->_Controller->getResponse();
-
 		$this->_Response->send();
 
 	}

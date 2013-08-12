@@ -15,15 +15,11 @@ namespace Cocktail;
  * Base class for all kind of requests. Wraps all input that is available at startup
  * @author t
  * @package Cocktail\Request
- * @version 1.01
- *
+ * @version 1.1
  */
 abstract class Request {
 
-    /**
-     * @var static singleton instance, get with static::instance()
-     */
-    protected static $_Instance;
+	use \Camarera\TraitSingletonGlobal, \Camarera\TraitServe;
 
 	/**
 	 * @var string default request method, required for routing
@@ -40,42 +36,14 @@ abstract class Request {
 	const ORIGIN_SERVER = 'SERVER';
 
 	/**
-	 * @return \static
-	 */
-	public static function instance() {
-		if (is_null(static::$_Instance)) {
-			static::$_Instance = static::_instance();
-		}
-		return static::$_Instance;
-	}
-
-	/**
 	 * I set params based on current env request
 	 * @return static
 	 */
 	protected static function _instance() {
-		$Request = new static();
+		$Request = new static;
 		$Request->_SERVER = $_SERVER;
 		return $Request;
 	}
-
-	/**
-     * I create and return an instance
-     * @param true|???
-     * @return \Cocktail\Request
-     */
-    public static function serve($data=null) {
-		if (is_null($data)) {
-			$ret = new static;
-		}
-		elseif ($data === true) {
-			$ret = static::instance();
-		}
-		else{
-			throw new \HttpInvalidParamException();
-		}
-		return $ret;
-    }
 
     /**
      * I provide read access to protected props
@@ -89,18 +57,6 @@ abstract class Request {
 		}
 		throw new \MagicGetException($key, get_called_class());
 	}
-
-	/**
-	 * @return string I return request method in nicer form
-	 */
-	public function getRequestMethod() {
-		return ucfirst(strtolower($this->_requestMethod));
-	}
-
-	/**
-	 * I am protected, use get()
-	 */
-	protected function __construct() {}
 
 	/**
 	 * I return a named param, $origin should be restricted to input sources and defaulted to the most widely used one
