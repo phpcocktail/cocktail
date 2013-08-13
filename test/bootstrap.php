@@ -25,7 +25,7 @@ ini_set('display_errors', 1);
 
 /*
 copy('assets/phpunit.ori.s3db', 'assets/phpunit.s3db');
-$StoreConfig = \StoreDriverSqlite3Config::get(array(
+$StoreConfig = \StoreSqlSqlite3Config::get(array(
 		'database' => 'phpunit.s3db',
 		'path' => 'assets',
 		'tablePrefix' => 'asd_',
