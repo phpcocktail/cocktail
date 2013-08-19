@@ -12,13 +12,29 @@
 namespace Cocktail;
 
 /**
+ * Application class is the unified frontend controller. Should be instantiated (booted) by a front controller in assets
+ * 	I need a request to get data from, a response to send back, a controller to fill the response based on the request,
+ * 	and a router which finds the appropriate controller. All these classes have an application-level singleton and I
+ * 	use these (unless I get them injected before run() is called). I get the proper classname to create from the $Config
+ * 	object.
+ *
  * @author t
  * @package Cocktail\Application
  * @version 1.1
+ *
+ * @property \ApplicationConfig $_Config
+ * @property-read \ApplicationConfig $Config
+ * @property-read \Request $Request
+ * @property-read \Response $Response
+ * @property-read \Router $Router
+ * @property-read \Controller $Controller
  */
 abstract class Application {
 
-	use \Camarera\TraitServeWithConfig;
+	use \Camarera\TraitServeWithConfig,
+		\Camarera\TraitSingletonGlobal,
+		\Camarera\TraitMagicGetProtected,
+		\Camarera\TraitPropertyExistsCached;
 
 	/**
  	 * @var \ApplicationConfig
@@ -46,7 +62,7 @@ abstract class Application {
 	protected $_Controller;
 
 	/**
-	 * @var self main application instance
+	 * @var \Application self main application instance
 	 */
 	protected static $_Instance;
 
@@ -54,11 +70,8 @@ abstract class Application {
 	 * I return singleton instance. Note I use self:: so there is one Application singleton instance, not one for all subclasses
 	 * @return static
 	 */
-	public final static function instance() {
-		if (empty(self::$_Instance)) {
-			self::$_Instance = static::boot();
-		}
-		return self::$_Instance;
+	protected final static function _instance() {
+		return static::boot();
 	}
 
 	/**
@@ -85,22 +98,6 @@ abstract class Application {
 
 		return $Application;
 	}
-
-	/**
-	 * @return \ApplicationConfig I return current config
-	 */
-	public function getConfig() {
-		return $this->_Config;
-	}
-
-	/**
-	 * Implement this to return a correct Request object
-	 */
-	abstract protected function _getRequest();
-	/**
-	 * Implement this to return a proper Response object
-	 */
-	abstract protected function _getResponse();
 
 	/**
 	 * I inject request object if needed
@@ -141,19 +138,19 @@ abstract class Application {
 
 		if (empty($this->_Response)) {
 			$responseClassname = $this->_Config->responseClassname;
-			$this->_Response = $responseClassname::get();
+			$this->_Response = $responseClassname::instance();
 		}
 
 		if (empty($this->_Router)) {
 			$routerClassname = $this->_Config->routerClassname;
-			$this->_Router = $routerClassname::get();
+			$this->_Router = $routerClassname::instance();
 		}
 
 		$Route = $this->_Router->route($this->_Request);
 
 		if (empty($this->_Controller)) {
 			$controllerClassname = $Route->controllerClassname;
-			$this->_Controller = $controllerClassname::get();
+			$this->_Controller = $controllerClassname::instance();
 		}
 
 		$this->_Controller
@@ -162,7 +159,6 @@ abstract class Application {
 			->invoke($Route)
 		;
 
-		$this->_Response = $this->_Controller->getResponse();
 		$this->_Response->send();
 
 	}

@@ -12,18 +12,20 @@
 namespace Cocktail;
 
 /**
+ * I am a skeleton class for console applications
+ *
  * @author t
  * @package Cocktail\Application
  * @version 1.1
+ *
+ * @property \ApplicationConsoleConfig $_Config
+ * @property-read \ApplicationConsoleConfig $Config
+ * @property-read \RequestConsole $Request
+ * @property-read \ResponseConsole $Response
+ * @property-read \Router $Router
+ * @property-read \Controller $Controller
  */
 class ApplicationConsole extends \Application {
-
-	protected function _getRequest() {
-		return \RequestConsole::instance();
-	}
-	protected function _getResponse() {
-		return \ResponseConsole::get();
-	}
 
 	public function getUser() {
 		return null;

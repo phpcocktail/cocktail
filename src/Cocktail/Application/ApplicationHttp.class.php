@@ -12,19 +12,20 @@
 namespace Cocktail;
 
 /**
- * simple http server application
+ * I am a skeleton HTTP application class
+ *
  * @author t
  * @package Cocktail\Application
  * @version 1.1
+ *
+ * @property \ApplicationHttpConfig $_Config
+ * @property-read \ApplicationHttpConfig $Config
+ * @property-read \RequestHttp $Request
+ * @property-read \ResponseHttp $Response
+ * @property-read \Router $Router
+ * @property-read \Controller $Controller
  */
 class ApplicationHttp extends \Application {
-
-	protected function _getRequest() {
-		return \RequestHttp::instance();
-	}
-	protected function _getResponse() {
-		return \ResponseHttp::get();
-	}
 
 	public function getUser() {
 		return \UserWeb::instance();
