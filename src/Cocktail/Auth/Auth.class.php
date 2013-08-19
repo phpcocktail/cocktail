@@ -12,6 +12,7 @@
 namespace Cocktail;
 
 /**
+ * @obsolete this class is obsoleted and abandoned
  * facade for auth drivers. These drivers have to be registered with Auth::registerDriver() by an id and later the
  * 	drivers can be referenced by that id. If you use only one auth driver, you can always leave id empty to use 'default'
  * @author t

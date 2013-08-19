@@ -12,6 +12,7 @@
 namespace Cocktail;
 
 /**
+ * @obsolete this class is obsoleted and abandoned
  * basic class to be extended
  * @author t
  * @package Cocktail\Auth

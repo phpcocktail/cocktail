@@ -12,6 +12,7 @@
 namespace Cocktail;
 
 /**
+ * @obsolete this class is obsoleted and abandoned
  * basic class for input validator objects. Uses validation functionality of models.
  *
  * @author t
