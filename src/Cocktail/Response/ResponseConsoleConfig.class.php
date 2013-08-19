@@ -13,11 +13,12 @@ namespace Cocktail;
 
 /**
  * ResponseConsole config
+ *
  * @author t
  * @package Cocktail\Response
- * @version 1.01
+ * @version 1.1
  */
-class ResponseConsoleConfig extends \Config {
+class ResponseConsoleConfig extends \ResponseConfig {
 
 	/**
 	 * @var bool controls if addContent() should be printed immediately or printed agregated at script end

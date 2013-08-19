@@ -13,12 +13,11 @@ namespace Cocktail;
 
 /**
  * ResponseHttp config
+ *
  * @author t
  * @package Cocktail\Response
- * @version 1.01
+ * @version 1.1
  */
-class ResponseHttpConfig extends \Config {
-
-
+class ResponseHttpConfig extends \ResponseConfig {
 
 }

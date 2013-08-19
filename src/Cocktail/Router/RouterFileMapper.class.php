@@ -13,9 +13,10 @@ namespace Cocktail;
 
 /**
  * RouterFilemapper is the most useful automatic route mapper. It extends Cocktail\Router to avoid resolving loop
+ *
  * @author t
  * @package Cocktail\Router
- * @version 1.01
+ * @version 1.1
  */
 class RouterFileMapper extends \Cocktail\Router {
 
@@ -32,9 +33,9 @@ class RouterFileMapper extends \Cocktail\Router {
  			$eachControllerPart = ucfirst(strtolower($eachControllerPart));
  		}
 
-		$controllerPrefix =  \Application::instance()->getConfig()->controllerPrefix;
+		$controllerPrefix =  \Application::instance()->Config->controllerPrefix;
 		$controllerClassname = '';
-		$controllerNamespace = \Application::instance()->getConfig()->namespace;
+		$controllerNamespace = \Application::instance()->Config->namespace;
 		$actionParts = array();
 		$actionMethodName = '';
 		$paramParts = array();
@@ -57,7 +58,7 @@ class RouterFileMapper extends \Cocktail\Router {
 		}
 		if (!class_exists($controllerClassname)) {
 			// @todo clean this!
-			echop('class not found: ' . $controllerClassname);
+			echo 'class not found: ' . $controllerClassname . "\n\n";
 			#echop(\Camarera::getDebug());
 			die('FU');
 		}
@@ -91,6 +92,7 @@ class RouterFileMapper extends \Cocktail\Router {
 			$actionMethodName = $method;
 			break;
 		}
+
 		// I default the action to be called to actionAllIndex() without checking if it exists. You can just omit it, especially for hmvc routers.
 		if (empty($actionMethodName)) {
 			if (method_exists($controllerClassname, 'actionAllIndex')) {
@@ -126,7 +128,7 @@ class RouterFileMapper extends \Cocktail\Router {
 			? array_slice($Request->routeParts, 0 - count($paramParts))
 			: array();
 
-		return \Route::get(array(
+		return \Route::serve(array(
 				'controllerClassname' => $controllerClassname,
 				'actionMethodName' => $actionMethodName,
 				'paramParts' => $paramParts,

@@ -16,50 +16,26 @@ namespace Cocktail;
  * @author t
  * @package Cocktail\Response
  * @version 1.01
+ *
+ * @property \ResponseConfig $_Config
+ * @property-read \ResponseConfig $Config
+ * @property-read mixed $content
  */
 abstract class Response {
 
-	/**
-	 * @var \ResponseConfig
-	 */
-	protected $_Config;
+	use \Camarera\TraitSingletonGlobal, \Camarera\TraitServeWithConfig;
 
+	/**
+	 * @var mixed string, or anything that's string-castable
+	 */
 	protected $_content;
 
 	/**
-	 * @var static singleton response instance
-	 */
-	static protected $_instance;
-
-	/**
+	 * I just return an empty object of my class
 	 * @return static
 	 */
-	public static function instance() {
-		if (is_null(self::$_instance)) {
-			self::$_instance = new static();
-		}
-		return self::$_instance;
-	}
-
-	/**
-	 * @param ResponseConfig $Config
-	 * @return static
-	 */
-	public static function get(\ResponseConfig $Config=null) {
-
-		if (is_null($Config)) {
-			$configClassname = get_called_class() . 'Config';
-			if (strpos($configClassname, '\\')) {
-				$configClassname = substr($configClassname, strrpos($configClassname, '\\')+1);
-			}
-			$Config = $configClassname::get();
-		}
-
-		$Response = new static();
-		$Response->_Config = $Config;
-
-		return $Response;
-
+	protected static function _instance() {
+		return static::serve();
 	}
 
 	/**

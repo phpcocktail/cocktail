@@ -16,6 +16,9 @@ namespace Cocktail;
  * @author t
  * @package Cocktail\Response
  * @version 1.01
+ *
+ * @property \ResponseHttpConfig $_Config
+ * @property-read \ResponseHttpConfig $Config
  */
 class ResponseHttp extends \Response {
 
@@ -96,11 +99,6 @@ class ResponseHttp extends \Response {
 	 * @var string the actual content is accumulated in this
 	 */
 	protected $_content = '';
-
-	/**
-	 * I am protected, use get()
-	 */
-	protected function __construct() {}
 
 	/**
 	 * I send (output) the response

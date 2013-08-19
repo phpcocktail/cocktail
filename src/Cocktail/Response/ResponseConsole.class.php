@@ -16,6 +16,9 @@ namespace Cocktail;
  * @author t
  * @package Cocktail\Response
  * @version 1.01
+ *
+ * @property \ResponseConsoleConfig $_Config
+ * @property-read \ResponseConsoleConfig $Config
  */
 class ResponseConsole extends \Response {
 

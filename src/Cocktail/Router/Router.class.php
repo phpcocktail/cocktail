@@ -18,18 +18,19 @@ namespace Cocktail;
  */
 abstract class Router {
 
+	use \Camarera\TraitServe, \Camarera\TraitSingletonGlobal;
+
 	/**
-	 * I am protected so you have to overwrite and specify return type
+	 * I return an empty instance
 	 * @return static
 	 */
-	public static function get() {
-		$Router = new static();
-		return $Router;
+	protected static function _instance() {
+		return static::serve();
 	}
 
 	/**
 	 * @param Request $Request
-	 * @return \Cokctail\Route
+	 * @return \Route
 	 */
 	abstract public function route(\Request $Request);
 
