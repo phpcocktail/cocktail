@@ -26,11 +26,13 @@
 				 * I could include parent template here but setting it up is more hassle than use.
 				 *	All of the static calls below are functional.
 				 */
-				#echo \b::b(static::_include($__data, 'Block/BlockContainer.html', $__templatePath), 2)
-				#echo \b::b(static::_include($__data, 'Block/BlockContainer.html'), 2)
-				#echo \b::b(static::_include(null, 'Block/BlockContainer.html', $__templatePath), 2)
-				#echo \b::b(static::_includeParent(), 2)
-				#echo \b::b(static::_includeTemplate('Block/BlockContainer.html'), 2)
+				// @todo fix $data problem when calling more than one includes
+				// @todo check multiple inheritance!?
+//				echo \b::b(static::_include($__data, 'Block/BlockContainer.html', $__templatePath), 2)
+//				echo \b::b(static::_include(null, 'Block/BlockContainer.html', $__templatePath), 2);
+//				echo \b::b(static::_include($__data, 'Block/BlockContainer.html'), 2);
+//				echo \b::b(static::_includeParent(), 2)
+//				echo \b::b(static::_includeTemplate('Block/BlockContainer.html'), 2)
 			?>
 
 			<?php foreach ($blocks as $eachBlock): ?>

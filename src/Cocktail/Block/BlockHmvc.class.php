@@ -28,7 +28,7 @@ class BlockHmvc extends \Block {
 	/**
 	 * @var \Request
 	 */
-	public $Request;
+	protected $_Request;
 
 	/**
 	 * @var string by default, I invoke a suitable Index action method
@@ -50,7 +50,7 @@ class BlockHmvc extends \Block {
 	 * @return \View|string something to be printed
 	 */
 	function _generate() {
-		$Request = isset($this->Request) ? $this->Request : \RequestHttp::instance();
+		$Request = isset($this->_Request) ? $this->_Request : \RequestHttp::instance();
 		$requestMethod = $Request->requestMethod;
 		if (method_exists($this, $actionMethod = 'action' . $requestMethod . $this->_actionNameToCall)) {
 			$ret = $this->$actionMethod();

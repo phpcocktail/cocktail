@@ -31,7 +31,7 @@ class ShakeMix extends Shake {
 					return 'ERROR: unknown command: ' . $args[0] . "\n\n";
 			}
 		};
-		return \View::get('Shake/Mix/help');
+		return \View::build('Shake/Mix/help');
 	}
 
 }

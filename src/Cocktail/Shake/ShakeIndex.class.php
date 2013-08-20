@@ -20,7 +20,7 @@ namespace Cocktail;
 class ShakeIndex extends \Shake {
 
 	public function actionIndex() {
-		return \View::get('Shake/index');
+		return \View::build('Shake/index');
 	}
 
 }

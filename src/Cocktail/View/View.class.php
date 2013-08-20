@@ -15,6 +15,12 @@
 namespace Cocktail;
 
 /**
+ * I am a wrapper class to all kinds of views. I act as a View but indeed I will look up a suitable template and use
+ *      its defined (by conf) view subclass
+ * A suitable template is found as: I take from all config containers the View field setup, if exists. Inspecting these
+ *      View conf dewfs I look for the template in each config's template path. The order is like normal conf lookups.
+ *      Then, I create a View subclass defined by the hit container conf and render it using the already stored or just
+ *      sent data (andtemplatefilename of course).
  * @author t
  * @package Cocktail\View
  * @version 1.01
@@ -31,14 +37,12 @@ class View {
 	 */
 	protected static $_containerConfigCache = array();
 
-
-
 	/**
 	 * @param null $templateName
 	 * @param null $data
 	 * @return static
 	 */
-	public static function get($templateName=null, $data=null) {
+	public static function build($templateName=null, $data=null) {
 		$View = new static;
 		if (!empty($templateName)) {
 			$View->_templateName = $templateName;
@@ -56,6 +60,12 @@ class View {
 		$this->_fnameExtension = $fnameExtension;
 	}
 
+	/**
+	 * I set a var in $_data
+	 * @param $keyOrData
+	 * @param null $value
+	 * @return $this
+	 */
 	public function assign($keyOrData, $value=null) {
 		if (func_num_args() == 2) {
 			$this->_data[$keyOrData] = $value;
@@ -66,6 +76,10 @@ class View {
 		return $this;
 	}
 
+	/**
+	 * I clear current $_data
+	 * @return $this
+	 */
 	public function clear() {
 		$this->_data = array();
 		return $this;
@@ -73,12 +87,14 @@ class View {
 
 
 	/**
-	 * I return a cached and verified slice of the config in $container.View config key
+	 * I return a cached and verified slice of the config in $container.View
+	 * 	I am cached because I will receive at least one hit from each view template filename lookup which happens at
+	 * 	all render. The static cache provides reuse of already fetched data
 	 * @param $container
 	 * @return null|array null if no View config section or if its invalid, otherwise array of checked config values.
 	 * 		see code for array definition
 	 */
-	protected function _getContainerConfig($container) {
+	protected static function _getContainerConfig($container) {
 
 		if (!array_key_exists($container, static::$_containerConfigCache)) {
 
@@ -121,7 +137,7 @@ class View {
 				goto finish;
 			}
 
-			$fnameExtension = $viewClassname::getTemplateFnameExension();
+			$fnameExtension = $viewClassname::getTemplateFnameExtension();
 
 			// this is the return format
 			$config = array(
@@ -251,8 +267,13 @@ class View {
 		}
 
 		$viewClassname = $templateConfig['viewClassname'];
-		$View = $viewClassname::get();
-		$ret = $View->render($templateConfig['templatePath'], $templateConfig['templateName'], $data);
+		/** @var \ViewAbstract $View */
+		$View = $viewClassname::build();
+		$ret = $View->render(
+			$templateConfig['templatePath'],
+			$templateConfig['templateName'],
+			$data
+		);
 
 		return $ret;
 

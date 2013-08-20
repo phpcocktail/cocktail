@@ -162,7 +162,7 @@ class ShakeMixClasslist extends \ShakeMix {
 			fclose ($this->_fp);
 		}
 
-		$footer = \View::get('Shake/footer');
+		$footer = \View::build('Shake/footer');
 		$this->_Response->addContent($footer);
 
 		die;
@@ -274,9 +274,9 @@ class ShakeMixClasslist extends \ShakeMix {
 	 * @throws \UnimplementedException
 	 */
 	protected function _writeManyFiles() {
-		$Header = \View::get('Shake/Mix/Classlist/header');
+		$Header = \View::build('Shake/Mix/Classlist/header');
 		$header = $Header->render();
-		$Alias = \View::get('Shake/Mix/Classlist/alias');
+		$Alias = \View::build('Shake/Mix/Classlist/alias');
 		foreach ($this->_classes as $eachClass) {
 			$fname = $this->_paramOutPath . '/' . $eachClass['classname'] . '.php';
 			if ($this->_paramTestMode) {
@@ -306,9 +306,9 @@ class ShakeMixClasslist extends \ShakeMix {
 	 * @param array[] $classes
 	 */
 	protected function _writeOneFile() {
-		$Header = \View::get('Shake/Mix/Classlist/header');
+		$Header = \View::build('Shake/Mix/Classlist/header');
 		$header = $Header->render();
-		$Alias = \View::get('Shake/Mix/Classlist/alias');
+		$Alias = \View::build('Shake/Mix/Classlist/alias');
 
 		if ($this->_paramTestMode) {
 			$this->_Response

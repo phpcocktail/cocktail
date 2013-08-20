@@ -24,7 +24,7 @@ namespace Cocktail;
 class ShakeApp extends \Shake {
 
 	public function actionAllHelp() {
-		return \View::get('Shake/App/help');
+		return \View::build('Shake/App/help');
 	}
 
 }

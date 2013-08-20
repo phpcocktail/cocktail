@@ -35,7 +35,6 @@ abstract class Block extends \Config {
 	 */
 	protected $_View;
 	/**
-	 *
 	 * @var array[string]mixed data for the main view
 	 */
 	protected $_viewData = array();
@@ -50,12 +49,12 @@ abstract class Block extends \Config {
 	protected $_templateFnameSuffix = '.html';
 
 	/**
-	 * I return an instance. Remember I'm protected only so you overwrite and provide phpdoc
+	 * I return an instance
 	 * @param string $template template name to be used
-	 * @param array|string data or css ID if string
+	 * @param array|string data or css ID if string. Useful for premade blocks when you insert them in your layout
 	 * @return static
 	 */
-	public static function get($template=null, $dataOrCssId=null) {
+	public static function build($template=null, $dataOrCssId=null) {
 		$Object = new static();
 		if (!is_null($template)) {
 			$Object->_template = $template;
@@ -63,7 +62,7 @@ abstract class Block extends \Config {
 		if (is_array($dataOrCssId)) {
 			$Object->_viewData = $dataOrCssId;
 		}
-		elseif  (is_string($dataOrCssId)) {
+		elseif (is_string($dataOrCssId)) {
 			$Object->_viewData['cssId'] = $dataOrCssId;
 		};
 		return $Object;
@@ -133,7 +132,7 @@ abstract class Block extends \Config {
 	 * I create the View object
 	 */
 	protected function _before() {
-		$this->_View = \View::get($this->_getTemplateFname($this->_template));
+		$this->_View = \View::build($this->_getTemplateFname($this->_template));
 	}
 
 	/**
@@ -141,7 +140,7 @@ abstract class Block extends \Config {
 	 */
 	protected function _after() {
 		if (!empty($this->_layout)) {
-			$LayoutView = \View::get($this->_getTemplateFname($this->_layout), $this->_viewData)
+			$LayoutView = \View::build($this->_getTemplateFname($this->_layout), $this->_viewData)
 					->set('layoutContent', $this->_content);
 			$this->_content = $LayoutView;
 			// @todo implement layout here

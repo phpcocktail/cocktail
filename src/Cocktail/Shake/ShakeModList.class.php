@@ -87,10 +87,10 @@ class ShakeModList extends \ShakeMod {
 			)
 		);
 
-		$content = \View::get('Shake/Mod/List', array('modules' => $modules));
+		$content = \View::build('Shake/Mod/List', array('modules' => $modules));
 		$this->_Response->addContent($content);
 
-		$footer = \View::get('Shake/footer');
+		$footer = \View::build('Shake/footer');
 		$this->_Response->addContent($footer);
 
 		die;

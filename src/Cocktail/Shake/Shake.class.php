@@ -372,7 +372,7 @@ class Shake extends \Cocktail\Controller {
 		}
 		$command = explode('/', trim(strtolower(\Util::camelcaseToSlashes($command)),'/'));
 
-		$content = \View::get('Shake/autohelp', array(
+		$content = \View::build('Shake/autohelp', array(
 			'classComment' => implode("\n", $classComment),
 			'command' => $command,
 			'subCommands' => $subCommands,
@@ -388,7 +388,7 @@ class Shake extends \Cocktail\Controller {
 	 * I send the default headline for the Shake tool
 	 */
 	protected function _sendHeadline() {
-		$headline = \View::get(
+		$headline = \View::build(
 			'Shake/headline',
 			array(
 				'version' => \Camarera::conf('Cocktail.version'),

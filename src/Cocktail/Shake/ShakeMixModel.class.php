@@ -136,13 +136,13 @@ class ShakeMixModel extends \ShakeMix {
 		}
 
 		// setup vars
-		$withGet = method_exists($this->_paramClassname, 'get') ? true : false;
+		$withServe = method_exists($this->_paramClassname, 'serve') ? true : false;
 		$classname = $this->_paramClassname;
 
 		// testmode
 		if ($this->_paramTestMode) {
-			$Model = $withGet
-					? $classname::get()
+			$Model = $withServe
+					? $classname::serve()
 					: new $classname();
 			foreach ($this->_paramSet as $eachKey=>$eachVal) {
 				$Model->$key = $val;
@@ -161,8 +161,8 @@ class ShakeMixModel extends \ShakeMix {
 		$t0 = microtime(true);
 
 		while (++$i) {
-			$Model = $withGet
-					? $classname::get()
+			$Model = $withServe
+					? $classname::serve()
 					: new $classname();
 			foreach ($this->_paramSet as $eachKey=>$eachVal) {
 				$method = 'set' . ucfirst($key);

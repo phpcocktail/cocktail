@@ -24,7 +24,7 @@ namespace Cocktail;
 class ShakeConf extends \Shake {
 
 	public function actionAllHelp() {
-		return \View::get('Shake/Conf/help');
+		return \View::build('Shake/Conf/help');
 	}
 
 }

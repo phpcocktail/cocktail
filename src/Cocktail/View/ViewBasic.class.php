@@ -62,7 +62,8 @@ class ViewBasic extends \ViewAbstract {
 		$output = ob_get_contents();
 		ob_end_clean();
 		// why this array_pop??? may it be leftover useless code?
-		array_pop(static::$_currentData);
+//		array_pop(static::$_currentData);
+		array_pop(static::$_templateDatas);
 		return $output;
 	}
 
@@ -74,6 +75,8 @@ class ViewBasic extends \ViewAbstract {
 	 * @return string the output
 	 */
 	protected static function _include($__data, $__template, $__templatePath=null) {
+#debug_print_backtrace();
+#die('FUP');
 		if (empty($__templatePath)) {
 			$templateData = end(static::$_templateDatas);
 			$__templatePath = $templateData['__templatePath'];

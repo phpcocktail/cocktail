@@ -23,7 +23,8 @@ namespace Cocktail;
  */
 abstract class Response {
 
-	use \Camarera\TraitSingletonGlobal, \Camarera\TraitServeWithConfig;
+	use \Camarera\TraitSingletonGlobal,
+		\Camarera\TraitServeWithConfig;
 
 	/**
 	 * @var mixed string, or anything that's string-castable

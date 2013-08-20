@@ -110,7 +110,7 @@ class HtmlAssets {
 		switch($section) {
 			case 'head':
 				$arrayFilter = array_flip(array('head', 'onLoad'));
-				$View = \View::get('Assets/head.html');
+				$View = \View::build('Assets/head.html');
 				$View->assign(array(
 						'jsFiles' => $this->_js['files'],
 						'jsCodes' => array_intersect_key($arrayFilter, $this->_js),

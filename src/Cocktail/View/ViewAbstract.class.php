@@ -50,7 +50,8 @@ abstract class ViewAbstract {
 	 * @throws \InvalidArgumentException
 	 * @return \View
 	 */
-	public static function get($templateName=null, $data=null) {
+	public static function build($templateName=null, $data=null) {
+		/** @var \ViewAbstract $View */
 		$View = new static();
 		$View->_templateName = $templateName;
 		if (!is_null($data)){
@@ -84,7 +85,7 @@ abstract class ViewAbstract {
 	 * @throws \InvalidArgumentException
 	 * @return \View
 	 */
-	public function set($field, $value=null) {
+	public function assign($field, $value=null) {
 		if (is_array($field) && is_null($value)) {
 			$this->_data = array_merge($this->_data, $field);
 		}
@@ -107,7 +108,11 @@ abstract class ViewAbstract {
 		return $this;
 	}
 
-	public static function getTemplateFnameExension() {
+	/**
+	 * I just return current filename extension
+	 * @return string
+	 */
+	public static function getTemplateFnameExtension() {
 		return static::$_templateFnameExtension;
 	}
 

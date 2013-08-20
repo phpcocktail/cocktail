@@ -109,9 +109,9 @@ class ControllerHmvc extends \Controller {
 	}
 
 	/**
-	 * calling an action by this invoke is necessary to perform _before() and _after() and to avoid scope problems with
-	 * 		protected methods (which are reachable only ba rerouting)
-	 * @param Route $Route it contains everything needed
+	 * an action must be invoked by this to perform _before() and _after() properly and to avoid scope problems with
+	 * 		protected methods (which are reachable only by rerouting)
+	 * @param \Route $Route it contains everything needed
 	 * @return mixed
 	 */
 	public function invoke(\Route $Route) {

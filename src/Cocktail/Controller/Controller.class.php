@@ -25,19 +25,27 @@ namespace Cocktail;
  */
 class Controller {
 
-	protected $_layout;
-
-	protected $_viewData = array();
+	use \Camarera\TraitServe, \Camarera\TraitSingletonGlobal;
 
 	/**
-	 * @var \Response
+	 * @var string if non empty, the actual content will be put in this template, and rendered with view data again
 	 */
-	protected $_Response;
+	protected $_layout;
+
+	/**
+	 * @var array data to be set to main view
+	 */
+	protected $_viewData = array();
 
 	/**
 	 * @var \Request
 	 */
 	protected $_Request;
+
+	/**
+	 * @var \Response
+	 */
+	protected $_Response;
 
 	/**
 	 * @var \Route
@@ -51,22 +59,16 @@ class Controller {
 
 	/**
 	 * @var array of fieldname=>callback settings to set controller variables
-	 * 	eg. array('User'=>function($id) { return User::get($id); }) means $Controller->User to be set by calling the lambda
+	 * 	eg. array('User'=>function($id) { return User::serve($id); }) means $Controller->User to be set by calling the lambda
 	 */
 	public static $autoParams = array();
 
 	/**
 	 * @return static
 	 */
-	public static function get() {
-		$Controller = new static();
-		return $Controller;
+	protected static function _instance() {
+		return static::serve();
 	}
-
-	/**
-	 * I am protected, use get()
-	 */
-	protected function __construct() {}
 
 	/**
 	 * I return layout filename, no defaulting
@@ -82,7 +84,7 @@ class Controller {
 	 */
 	protected function _applyTemplate() {
 		if (!is_null($templateFname = $this->_getTemplateFname())) {
-			$this->_View = \View::get($templateFname);
+			$this->_View = \View::build($templateFname);
 			$this->_View->setFnameExtension('.html');
 			$data = array_merge($this->_viewData, array(
 				'content' => $this->_Response->getContent(),

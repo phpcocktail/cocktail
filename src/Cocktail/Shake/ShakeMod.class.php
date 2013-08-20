@@ -143,7 +143,7 @@ class ShakeMod extends \Shake {
 	 * @return \View I return mod help template
 	 */
 	public function actionAllHelp() {
-		return \View::get('Shake/Mod/help');
+		return \View::build('Shake/Mod/help');
 	}
 
 	/**
